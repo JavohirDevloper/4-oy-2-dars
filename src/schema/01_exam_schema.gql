@@ -1,0 +1,20 @@
+type Query {
+  ping: String
+  books: [Book]
+}
+
+type Author {
+  id: ID!
+  first_name: String
+  last_name: String
+  full_name: String
+  username: String
+  password: String
+  books: [Book!]!
+}
+
+type Book {
+  id: ID!
+  name: String
+  author: Author
+}
