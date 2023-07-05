@@ -3,13 +3,8 @@ import { startStandaloneServer } from "@apollo/server/standalone";
 import { readFileSync } from "fs";
 
 
-const typeDefs = readFileSync("./src/schema/01_exam_schema.gql", "utf-8");
-console.log(typeDefs);
-const resolvers = {
-  Query: {
-    ping: () => "Ishladiyuu :)"
-    }
-  }
+import resolvers from './exam/01_exam.js';
+const typeDefs = readFileSync('./src/schema/01_exam_schema.gql', 'utf8');
 
 const server = new ApolloServer({
   typeDefs,

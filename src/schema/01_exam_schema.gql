@@ -1,20 +1,18 @@
 type Query {
-  ping: String
-  books: [Book]
+  meals: [Meal!]!
+  categories: [Category!]!
 }
 
-type Author {
-  id: ID!
-  first_name: String
-  last_name: String
-  full_name: String
-  username: String
-  password: String
-  books: [Book!]!
-}
-
-type Book {
+type Category {
   id: ID!
   name: String
-  author: Author
+  meals: [Meal!]!
+}
+
+type Meal {
+  id: ID!
+  name: String
+  price: Float
+  quantity: Int
+  category: Category
 }
