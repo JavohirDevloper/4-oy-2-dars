@@ -79,6 +79,7 @@ const resolvers = {
     },
   },
   Mutation: {
+    // post uchun
     createPost: (_, args) => {
       posts.push({
         id: posts.length + 1,
@@ -111,6 +112,8 @@ const resolvers = {
 
       return post;
     },
+
+    // user uchun
     createUser: (_, args) => {
       users.push({
         id: users.length + 1,
@@ -142,6 +145,8 @@ const resolvers = {
 
       return user;
     },
+
+    // comment uchun
     createComment: (_, args) => {
       comments.push({
         id: comments.length + 1,
@@ -150,8 +155,8 @@ const resolvers = {
       return comments.at(-1);
     },
     updateComment: (_, args) => {
-      const comment = comments.find((u) => u.id == args.id);
-      const index = comments.findIndex((u) => u.id == args.id);
+      const comment = comments.find((c) => c.id == args.id);
+      const index = comments.findIndex((c) => c.id == args.id);
 
       if (!comment) {
         throw new Error("Users not found");
@@ -162,8 +167,8 @@ const resolvers = {
       return comments[index];
     },
     removeComment: (_, args) => {
-      const comment = comments.find((u) => u.id == args.id);
-      const index = comments.findIndex((u) => u.id == args.id);
+      const comment = comments.find((c) => c.id == args.id);
+      const index = comments.findIndex((c) => c.id == args.id);
 
       if (!comment) {
         throw new Error("Users not found");

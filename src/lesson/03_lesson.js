@@ -52,14 +52,96 @@ const group_users = [
 const resolvers = {
   Query: {
     users: () => users,
+    user: () => {
+      const user = users.find((u) => u.id == args.id);
+      if (!user) {
+        throw new Error("Users not found");
+      }
+      return user;
+    },
     groups: () => groups,
+    group: (_, args) => {
+      const group = groups.find((g) => g.id == args.id);
+      if(!group) {
+        throw new Error("Groups not found")
+      }
+      return group;
+    }
   },
+
+  Mutation: {
+    // group uchun
+    createGroup: (_, args) => {
+      groups.push({
+       id: groups.length + 1,
+       name: args.input.name, 
+      })
+      return groups.at(-1);
+    },
+    updateGroup: (_, args) => {
+      const group = groups.find((p) => p.id == args.id);
+      const index = groups.findIndex((p) => p.id == args.id);
+
+      if (!group) {
+        throw new Error("Groups not found");
+      }
+
+      groups.splice(index, 1, { ...group, ...args.input });
+
+      return groups[index];
+    },
+    removeGroup: (_, args) => {
+      const group = groups.find((g) => g.id == args.id);
+      const index = groups.findIndex((g) => g.id == args.id);
+
+      if (!group) {
+        throw new Error("Groups not found");
+      }
+
+      groups.splice(index, 1);
+
+      return group;
+    },
+    // users uchun
+    createUser: (_, args) => {
+      users.push({
+        id: users.length + 1,
+        first_name: args.input.first_name, 
+        last_name: args.input.last_name
+       })
+       return users.at(-1);
+    },
+    updateUser: (_, args) => {
+      const user = users.find((u) => u.id == args.id);
+      const index = users.findIndex((u) => u.id == args.id);
+
+      if (!user) {
+        throw new Error("Users not found");
+      }
+
+      users.splice(index, 1, { ...user, ...args.input });
+
+      return users[index];
+    },
+    removeUser: (_, args) => {
+      const user = users.find((u) => u.id == args.id);
+      const index = users.findIndex((u) => u.id == args.id);
+
+      if (!user) {
+        throw new Error("Users not found");
+      }
+
+      users.splice(index, 1);
+
+      return user;
+    },
+  },
+
   User: {
     groups: (parent) => {
       const lesson = group_users.find((item) => item.user_id === parent.id);
       return groups.filter((group) => group.id === lesson.group_id);
     },
-    full_name: (parent) => `${parent.first_name} ${parent.last_name}`,
   },
   Group: {
     users: (parent) => {
